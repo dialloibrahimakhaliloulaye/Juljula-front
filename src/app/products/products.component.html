@@ -8,6 +8,19 @@
             <tr>
               <td rowspan="3">
                 <img height="100" src="{{this.catService.host+'/photoProduct/'+p.id}}" alt="">
+                <p>
+                  <button (click)="onEditPhoto(p)">
+                    <span class="glyphicon glyphicon-edit"></span>
+                  </button>
+                </p>
+                <p *ngIf="editPhoto==true && currentProducts==p">
+                  <input type="file" (change)="onSelectedFile($event)">
+                  <!--button mat-mini-fab color="primary" class="upload-btn"
+                          (click)="fileUpload.click()">
+                    <mat-icon>attach_file</mat-icon>
+                  </button-->
+                  <button class="btn btn-success" (click)="uploadPhoto()">Upload</button>
+                </p>
               </td>
             </tr>
             <tr>

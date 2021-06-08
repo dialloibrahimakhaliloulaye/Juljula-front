@@ -4,7 +4,7 @@
       <a class="navbar-brand" href="#">WebSiteName</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a class="clickable" (click)="onSelectedProducts()">Home</a></li>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
           <span class="caret"></span></a>
@@ -22,7 +22,7 @@
 <div class="container" >
   <div class="col-md-3">
     <ul class="list-group" *ngIf="categories">
-      <li (click)="getProductsByCat(c)" class="list-group-item" *ngFor="let c of categories._embedded.categories">
+      <li [ngClass]="currentCategorie==c?'active':''" (click)="getProductsByCat(c)" class="list-group-item clickable" *ngFor="let c of categories._embedded.categories">
         {{c.name}}
       </li>
     </ul>
