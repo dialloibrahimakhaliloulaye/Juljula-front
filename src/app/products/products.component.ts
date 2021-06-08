@@ -59,15 +59,15 @@ export class ProductsComponent implements OnInit {
   uploadPhoto() {
     this.progess=0;
     this.currentFileUpload=this.selectedFiles.item(0);
-    this.catService.uploadPhotoProduct(this.currentFileUpload).subscribe(event=>{
+    this.catService.uploadPhotoProduct(this.currentFileUpload, this.currentProducts.id).subscribe(event=>{
       if(event.type===HttpEventType.UploadProgress){
         // @ts-ignore
-        this.progess.pourcentage=Math.round(100*event.loaded / event.total);
-      } else if (event instanceof HttpResponse){
+        this.progess.pourcentage=Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
         alert("Fichier bien chargé")
+       }
       }, err=>{
         alert("problème de chargement");
-      }
     })
     this.selectedFiles=undefined;
   }
