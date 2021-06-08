@@ -13,8 +13,9 @@ export class ProductsComponent implements OnInit {
   public editPhoto: any ;
   public currentProducts: any;
   private selectedFiles: any;
-  private progess: any;
+  public progess: number=0;
   private currentFileUpload: any;
+  private title:string='';
 
   constructor(
     public catService:CatalogueService,
@@ -27,12 +28,25 @@ export class ProductsComponent implements OnInit {
         let url=val.url;
         let p1=this.route.snapshot.params.p1;
         if (p1==1){
+          this.title='Produits séléctionnés';
           this.getProducts('/products/search/selectedProducts');
         }else if (p1==2){
+          this.title='Produits séléctionnés'
           let idCategorie=this.route.snapshot.params.p2;
           this.getProducts('/categories/'+idCategorie+'/products');
+        }else if (p1==3){
+          this.title='Produits séléctionnés'
+          let idCategorie=this.route.snapshot.params.p2;
+          this.getProducts('/products/search/promoProducts');
+        }else if (p1==4){
+          this.title='Produits séléctionnés'
+          let idCategorie=this.route.snapshot.params.p2;
+          this.getProducts('/products/search/dispoProducts');
+        }else if (p1==5){
+          let idCategorie=this.route.snapshot.params.p2;
+          this.getProducts('/products/search/dispoProducts');
         }
-        console.log(url);
+
       }
     });
 
@@ -62,7 +76,9 @@ export class ProductsComponent implements OnInit {
     this.catService.uploadPhotoProduct(this.currentFileUpload, this.currentProducts.id).subscribe(event=>{
       if(event.type===HttpEventType.UploadProgress){
         // @ts-ignore
-        this.progess.pourcentage=Math.round(100 * event.loaded / event.total);
+
+        this.progess=Math.round(100 * event.loaded / event.total);
+        console.log(this.progess);
       } else if (event instanceof HttpResponse) {
         alert("Fichier bien chargé")
        }

@@ -19,7 +19,7 @@ export class CatalogueService {
   uploadPhotoProduct(file: File, idProducts:any):Observable<HttpEvent<{}>> {
     let formadata: FormData=new FormData();
     formadata.append('file', file as any);
-    const req=new HttpRequest('POST', this.host+'/uploadPhoto'+idProducts, formadata, {
+    const req=new HttpRequest('POST', this.host+'/uploadPhoto/'+idProducts, formadata, {
       reportProgress:true,
       responseType: 'text'
     });
