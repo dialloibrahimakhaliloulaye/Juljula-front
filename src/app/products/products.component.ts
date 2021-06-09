@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CatalogueService} from "../catalogue.service";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {HttpEventType, HttpResponse} from "@angular/common/http";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'app-products',
@@ -14,13 +15,15 @@ export class ProductsComponent implements OnInit {
   public currentProducts: any;
   private selectedFiles: any;
   public progess: number=0;
-  private currentFileUpload: any;
+  public currentFileUpload: any;
   public title:string='';
+  public timestamp: number=0;
 
   constructor(
     public catService:CatalogueService,
     private route:ActivatedRoute,
-    private router:Router) {}
+    private router:Router,
+    public authService:AuthenticationService) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((val) => {
@@ -82,11 +85,24 @@ export class ProductsComponent implements OnInit {
         this.progess=Math.round(100 * event.loaded / event.total);
         console.log(this.progess);
       } else if (event instanceof HttpResponse) {
-        alert("Fichier bien chargé")
+        this.timestamp=Date.now();
+        //alert("Fichier bien chargé")
        }
       }, err=>{
         alert("problème de chargement");
     })
     this.selectedFiles=undefined;
+  }
+
+  getTS() {
+    return this.timestamp;
+  }
+
+  onAddProductToCaddy(p: any) {
+    
+  }
+
+  onProductDetails(p: any) {
+    
   }
 }

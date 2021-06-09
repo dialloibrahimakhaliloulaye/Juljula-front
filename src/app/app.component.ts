@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CatalogueService} from "./catalogue.service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "./services/authentication.service";
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,14 @@ import {Router} from "@angular/router";
 export class AppComponent implements OnInit{
    categories:any;
    public currentCategorie:any;
-  constructor(private catService:CatalogueService, private router:Router) {
+  constructor(private catService:CatalogueService, private router:Router,
+              private authService:AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this.getCategories()
+    this.authService.loadAuthenticatedUserFromLocalStorage();
+    this.getCategories();
+
   }
 
   private getCategories() {
@@ -45,5 +49,10 @@ export class AppComponent implements OnInit{
   onProductsDispo() {
     this.currentCategorie=undefined;
     this.router.navigateByUrl("/products/4/0");
+  }
+
+  onLogout() {
+    this.authService.removeTokenFromLocalStorage();
+    this.router.navigateByUrl('/login');
   }
 }
