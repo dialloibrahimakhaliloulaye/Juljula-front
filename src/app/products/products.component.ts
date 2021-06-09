@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit {
   private selectedFiles: any;
   public progess: number=0;
   private currentFileUpload: any;
-  private title:string='';
+  public title:string='';
 
   constructor(
     public catService:CatalogueService,
@@ -31,24 +31,26 @@ export class ProductsComponent implements OnInit {
           this.title='Produits séléctionnés';
           this.getProducts('/products/search/selectedProducts');
         }else if (p1==2){
-          this.title='Produits séléctionnés'
           let idCategorie=this.route.snapshot.params.p2;
+          this.title='Produits de la catégorie '+idCategorie;
           this.getProducts('/categories/'+idCategorie+'/products');
         }else if (p1==3){
-          this.title='Produits séléctionnés'
-          let idCategorie=this.route.snapshot.params.p2;
+          this.title='Produits en Promotion';
           this.getProducts('/products/search/promoProducts');
         }else if (p1==4){
-          this.title='Produits séléctionnés'
-          let idCategorie=this.route.snapshot.params.p2;
+          this.title='Produits Disponibles';
           this.getProducts('/products/search/dispoProducts');
         }else if (p1==5){
-          let idCategorie=this.route.snapshot.params.p2;
+          this.title='Produits Recherchés';
           this.getProducts('/products/search/dispoProducts');
         }
 
       }
     });
+    let p1=this.route.snapshot.params.p1;
+    if(p1==1){
+      this.getProducts('products/search/selectedProducts');
+    }
 
   }
 
